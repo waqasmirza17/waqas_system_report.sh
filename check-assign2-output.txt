@@ -1,0 +1,12 @@
+---Host/Student info----
+
+Running on Mon Mar 10 03:11:30 PM EDT 2025
+Run by waqas - () on host
+ Static hostname: waqas
+      Machine ID: bdd45d1424dd49c5950f104b8da391e3
+Operating System: Ubuntu 24.04.1 LTS
+9ac9629390cbcae160fd061a74ce1178  ./check-assign2-script.sh - d41d8cd98f00b204e9800998ecf8427e  -
+------------------------
+
+---Start of Assignment2.sh Check------
+Failed to retrieve makecontainers.sh script
