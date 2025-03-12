@@ -1,0 +1,518 @@
+---Host/Student info----
+
+Running on Tue Mar 11 02:17:04 PM EDT 2025
+Run by waqas - () on host
+ Static hostname: waqas
+      Machine ID: bdd45d1424dd49c5950f104b8da391e3
+Operating System: Ubuntu 24.04.1 LTS
+9ac9629390cbcae160fd061a74ce1178  ./check-assign2-script.sh - d41d8cd98f00b204e9800998ecf8427e  -
+------------------------
+
+---Start of Assignment2.sh Check------
+---Running makecontainers.sh----------
+# Host server1-mgmt found: line 6
+/home/waqas/.ssh/known_hosts updated.
+Original contents retained as /home/waqas/.ssh/known_hosts.old
+---Retrieving assignment2.sh script---
+Retrieved assignment2 script
+Copied assignment2.sh script to server1
+---assignment2.sh run----
+Starting the assignment2.sh script
+Setting up network configuration for 192.168.16.21
+Network configuration updated to 192.168.16.21
+Updating /etc/hosts file
+/etc/hosts already contains the correct entry
+Checking and installing the required software
+apache2 is already installed
+squid is already installed
+Creating users and configuring SSH keys
+dennis already exists
+aubrey already exists
+captain already exists
+snibbles already exists
+brownie already exists
+scooter already exists
+sandy already exists
+perrier already exists
+cindy already exists
+tiger already exists
+yoda already exists
+User dennis added to sudo group
+All user accounts and SSH keys configured
+assignment2.sh script completed
+-------------------------
+
+--network--------
+/etc/hosts
+-----------------------
+127.0.0.1	localhost
+::1		localhost ip6-localhost ip6-loopback
+ff02::1		ip6-allnodes
+ff02::2		ip6-allrouters
+
+
+192.168.16.2 openwrt
+172.16.1.2 openwrt-mgmt
+
+192.168.16.21 server1
+-------------
+/etc/netplan/10-lxc.yaml
+-----------------------
+network:
+    version: 2
+    ethernets:
+        eth0:
+            addresses: [192.168.16.241/24]
+            routes:
+              - to: default
+                via: 192.168.16.2
+            nameservers:
+                addresses: [192.168.16.2]
+                search: [home.arpa, localdomain]
+        eth1:
+            addresses: [172.16.1.241/24]
+-------------
+---applying netplan---
+---ip a---------------
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+12: eth0@if13: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 00:16:3e:bb:23:01 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 192.168.16.241/24 brd 192.168.16.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::216:3eff:febb:2301/64 scope link 
+       valid_lft forever preferred_lft forever
+14: eth1@if15: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 00:16:3e:20:f7:8b brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 172.16.1.241/24 brd 172.16.1.255 scope global eth1
+       valid_lft forever preferred_lft forever
+    inet6 fe80::216:3eff:fe20:f78b/64 scope link 
+       valid_lft forever preferred_lft forever
+--ip r----------------
+default via 192.168.16.2 dev eth0 proto static 
+172.16.1.0/24 dev eth1 proto kernel scope link src 172.16.1.241 
+192.168.16.0/24 dev eth0 proto kernel scope link src 192.168.16.241 
+----------------------
+
+---services status------
+● apache2.service - The Apache HTTP Server
+     Loaded: loaded (/lib/systemd/system/apache2.service; enabled; vendor preset: enabled)
+    Drop-In: /run/systemd/system/service.d
+             └─zzz-lxc-service.conf
+     Active: active (running) since Tue 2025-03-11 18:06:49 UTC; 10min ago
+       Docs: https://httpd.apache.org/docs/2.4/
+   Main PID: 200 (apache2)
+      Tasks: 55 (limit: 4551)
+     Memory: 7.1M
+        CPU: 172ms
+     CGroup: /system.slice/apache2.service
+             ├─200 /usr/sbin/apache2 -k start
+             ├─205 /usr/sbin/apache2 -k start
+             └─206 /usr/sbin/apache2 -k start
+
+Mar 11 18:06:48 server1 systemd[1]: Starting The Apache HTTP Server...
+Mar 11 18:06:49 server1 apachectl[185]: AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 192.168.16.21. Set the 'ServerName' directive globally to suppress this message
+Mar 11 18:06:49 server1 systemd[1]: Started The Apache HTTP Server.
+
+● squid.service - Squid Web Proxy Server
+     Loaded: loaded (/lib/systemd/system/squid.service; enabled; vendor preset: enabled)
+    Drop-In: /run/systemd/system/service.d
+             └─zzz-lxc-service.conf
+     Active: active (running) since Tue 2025-03-11 18:06:51 UTC; 10min ago
+       Docs: man:squid(8)
+   Main PID: 261 (squid)
+      Tasks: 4 (limit: 4551)
+     Memory: 28.4M
+        CPU: 530ms
+     CGroup: /system.slice/squid.service
+             ├─261 /usr/sbin/squid --foreground -sYC
+             ├─263 "(squid-1)" --kid squid-1 --foreground -sYC
+             ├─264 "(logfile-daemon)" /var/log/squid/access.log
+             └─265 "(pinger)"
+
+Mar 11 18:06:51 server1 squid[263]: Using Least Load store dir selection
+Mar 11 18:06:51 server1 squid[263]: Set Current Directory to /var/spool/squid
+Mar 11 18:06:51 server1 squid[263]: Finished loading MIME types and icons.
+Mar 11 18:06:51 server1 squid[263]: HTCP Disabled.
+Mar 11 18:06:51 server1 squid[263]: Pinger socket opened on FD 14
+Mar 11 18:06:51 server1 squid[263]: Squid plugin modules loaded: 0
+Mar 11 18:06:51 server1 squid[263]: Adaptation support is off.
+Mar 11 18:06:51 server1 squid[263]: Accepting HTTP Socket connections at conn3 local=[::]:3128 remote=[::] FD 12 flags=9
+Mar 11 18:06:51 server1 systemd[1]: Started Squid Web Proxy Server.
+Mar 11 18:06:52 server1 squid[263]: storeLateRelease: released 0 objects
+------------------------
+
+---ufw show added-------
+---ufw show status------
+------------------------
+
+---getents--------------------
+aubrey:x:1002:1003::/home/aubrey:/bin/bash
+captain:x:1003:1004::/home/captain:/bin/bash
+snibbles:x:1004:1005::/home/snibbles:/bin/bash
+brownie:x:1005:1006::/home/brownie:/bin/bash
+scooter:x:1006:1007::/home/scooter:/bin/bash
+sandy:x:1007:1008::/home/sandy:/bin/bash
+perrier:x:1008:1009::/home/perrier:/bin/bash
+cindy:x:1009:1010::/home/cindy:/bin/bash
+tiger:x:1010:1011::/home/tiger:/bin/bash
+yoda:x:1011:1012::/home/yoda:/bin/bash
+dennis:x:1001:1002::/home/dennis:/bin/bash
+sudo:x:27:ubuntu,dennis
+---user home dir contents-----
+   681384      4 -rw-r--r--   1 cindy    cindy        3771 Jan  6  2022 /home/cindy/.bashrc
+   681385      4 -rw-r--r--   1 cindy    cindy         220 Jan  6  2022 /home/cindy/.bash_logout
+   681386      4 -rw-r--r--   1 cindy    cindy         807 Jan  6  2022 /home/cindy/.profile
+   681388      4 -rw-r--r--   1 cindy    cindy         100 Mar 11 17:30 /home/cindy/.ssh/authorized_keys
+   681256      4 -rw-r--r--   1 captain  captain      3771 Jan  6  2022 /home/captain/.bashrc
+   681324      4 -rw-r--r--   1 captain  captain       220 Jan  6  2022 /home/captain/.bash_logout
+   681350      4 -rw-r--r--   1 captain  captain       807 Jan  6  2022 /home/captain/.profile
+   681352      4 -rw-r--r--   1 captain  captain       100 Mar 11 17:30 /home/captain/.ssh/authorized_keys
+   681366      4 -rw-r--r--   1 scooter  scooter      3771 Jan  6  2022 /home/scooter/.bashrc
+   681367      4 -rw-r--r--   1 scooter  scooter       220 Jan  6  2022 /home/scooter/.bash_logout
+   681368      4 -rw-r--r--   1 scooter  scooter       807 Jan  6  2022 /home/scooter/.profile
+   681370      4 -rw-r--r--   1 scooter  scooter       100 Mar 11 17:30 /home/scooter/.ssh/authorized_keys
+   681378      4 -rw-r--r--   1 perrier  perrier      3771 Jan  6  2022 /home/perrier/.bashrc
+   681379      4 -rw-r--r--   1 perrier  perrier       220 Jan  6  2022 /home/perrier/.bash_logout
+   681380      4 -rw-r--r--   1 perrier  perrier       807 Jan  6  2022 /home/perrier/.profile
+   681382      4 -rw-r--r--   1 perrier  perrier       100 Mar 11 17:30 /home/perrier/.ssh/authorized_keys
+   681390      4 -rw-r--r--   1 tiger    tiger        3771 Jan  6  2022 /home/tiger/.bashrc
+   681391      4 -rw-r--r--   1 tiger    tiger         220 Jan  6  2022 /home/tiger/.bash_logout
+   681392      4 -rw-r--r--   1 tiger    tiger         807 Jan  6  2022 /home/tiger/.profile
+   681394      4 -rw-r--r--   1 tiger    tiger         100 Mar 11 17:30 /home/tiger/.ssh/authorized_keys
+   546102      4 -rw-r--r--   1 root     remoteadmin     3771 Jan  6  2022 /home/remoteadmin/.bashrc
+   526205      4 -rwxr-xr-x   1 root     remoteadmin     2179 Mar 11 18:17 /home/remoteadmin/assignment2.sh
+   546103      4 -rw-r--r--   1 root     remoteadmin      220 Jan  6  2022 /home/remoteadmin/.bash_logout
+   549365      8 -rw-------   1 root     remoteadmin     6840 Mar 10 19:24 /home/remoteadmin/.bash_history
+   666163      0 -rw-r--r--   1 root     root               0 Mar  6 20:59 /home/remoteadmin/.cache/motd.legal-displayed
+   546104      4 -rw-r--r--   1 root     remoteadmin      807 Jan  6  2022 /home/remoteadmin/.profile
+   544773      4 -rw-------   1 root     root             107 Mar  6 20:45 /home/remoteadmin/.ssh/authorized_keys
+   544771      4 -rw-r--r--   1 root     ubuntu           107 Mar  6 20:45 /home/remoteadmin/.ssh/id_ed25519.pub
+   526984      4 -rw-r--r--   1 ubuntu   ubuntu          3771 Jan  6  2022 /home/ubuntu/.bashrc
+   526983      4 -rw-r--r--   1 ubuntu   ubuntu           220 Jan  6  2022 /home/ubuntu/.bash_logout
+   526985      4 -rw-r--r--   1 ubuntu   ubuntu           807 Jan  6  2022 /home/ubuntu/.profile
+   671611      4 -rw-r--r--   1 dennis   dennis           300 Mar 11 17:30 /home/dennis/.ssh/authorized_keys
+   681372      4 -rw-r--r--   1 sandy    sandy           3771 Jan  6  2022 /home/sandy/.bashrc
+   681373      4 -rw-r--r--   1 sandy    sandy            220 Jan  6  2022 /home/sandy/.bash_logout
+   681374      4 -rw-r--r--   1 sandy    sandy            807 Jan  6  2022 /home/sandy/.profile
+   681376      4 -rw-r--r--   1 sandy    sandy            100 Mar 11 17:30 /home/sandy/.ssh/authorized_keys
+   681360      4 -rw-r--r--   1 brownie  brownie         3771 Jan  6  2022 /home/brownie/.bashrc
+   681361      4 -rw-r--r--   1 brownie  brownie          220 Jan  6  2022 /home/brownie/.bash_logout
+   681362      4 -rw-r--r--   1 brownie  brownie          807 Jan  6  2022 /home/brownie/.profile
+   681364      4 -rw-r--r--   1 brownie  brownie          100 Mar 11 17:30 /home/brownie/.ssh/authorized_keys
+   681354      4 -rw-r--r--   1 snibbles snibbles        3771 Jan  6  2022 /home/snibbles/.bashrc
+   681355      4 -rw-r--r--   1 snibbles snibbles         220 Jan  6  2022 /home/snibbles/.bash_logout
+   681356      4 -rw-r--r--   1 snibbles snibbles         807 Jan  6  2022 /home/snibbles/.profile
+   681358      4 -rw-r--r--   1 snibbles snibbles         100 Mar 11 17:30 /home/snibbles/.ssh/authorized_keys
+   671721      4 -rw-r--r--   1 aubrey   aubrey          3771 Jan  6  2022 /home/aubrey/.bashrc
+   681032      4 -rw-r--r--   1 aubrey   aubrey           220 Jan  6  2022 /home/aubrey/.bash_logout
+   681033      4 -rw-r--r--   1 aubrey   aubrey           807 Jan  6  2022 /home/aubrey/.profile
+   681254      4 -rw-r--r--   1 aubrey   aubrey           100 Mar 11 17:30 /home/aubrey/.ssh/authorized_keys
+   681396      4 -rw-r--r--   1 yoda     yoda            3771 Jan  6  2022 /home/yoda/.bashrc
+   681397      4 -rw-r--r--   1 yoda     yoda             220 Jan  6  2022 /home/yoda/.bash_logout
+   681398      4 -rw-r--r--   1 yoda     yoda             807 Jan  6  2022 /home/yoda/.profile
+   681400      4 -rw-r--r--   1 yoda     yoda             100 Mar 11 17:30 /home/yoda/.ssh/authorized_keys
+/home/aubrey/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+-------------
+/home/brownie/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+-------------
+/home/captain/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+-------------
+/home/cindy/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+-------------
+/home/dennis/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+-------------
+/home/perrier/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+-------------
+/home/remoteadmin/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKjWsD/msRiOBQYomlYVdiET4M5dsxzzWrtJKoZosN5d 200541705@georgianc.on.ca
+-------------
+/home/sandy/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+-------------
+/home/scooter/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+-------------
+/home/snibbles/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+-------------
+/home/tiger/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+-------------
+/home/yoda/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+-------------
+------------------------------
+
+---assignment2.sh rerun--------------------------------------------------------------------
+Starting the assignment2.sh script
+Setting up network configuration for 192.168.16.21
+Network configuration updated to 192.168.16.21
+Updating /etc/hosts file
+/etc/hosts already contains the correct entry
+Checking and installing the required software
+apache2 is already installed
+squid is already installed
+Creating users and configuring SSH keys
+dennis already exists
+aubrey already exists
+captain already exists
+snibbles already exists
+brownie already exists
+scooter already exists
+sandy already exists
+perrier already exists
+cindy already exists
+tiger already exists
+yoda already exists
+User dennis added to sudo group
+All user accounts and SSH keys configured
+assignment2.sh script completed
+-------------------------------------------------------------------------------------------
+
+--network--------
+/etc/hosts
+-----------------------
+127.0.0.1	localhost
+::1		localhost ip6-localhost ip6-loopback
+ff02::1		ip6-allnodes
+ff02::2		ip6-allrouters
+
+
+192.168.16.2 openwrt
+172.16.1.2 openwrt-mgmt
+
+192.168.16.21 server1
+-------------
+/etc/netplan/10-lxc.yaml
+-----------------------
+network:
+    version: 2
+    ethernets:
+        eth0:
+            addresses: [192.168.16.241/24]
+            routes:
+              - to: default
+                via: 192.168.16.2
+            nameservers:
+                addresses: [192.168.16.2]
+                search: [home.arpa, localdomain]
+        eth1:
+            addresses: [172.16.1.241/24]
+-------------
+---applying netplan---
+---ip a---------------
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+12: eth0@if13: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 00:16:3e:bb:23:01 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 192.168.16.241/24 brd 192.168.16.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::216:3eff:febb:2301/64 scope link 
+       valid_lft forever preferred_lft forever
+14: eth1@if15: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 00:16:3e:20:f7:8b brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 172.16.1.241/24 brd 172.16.1.255 scope global eth1
+       valid_lft forever preferred_lft forever
+    inet6 fe80::216:3eff:fe20:f78b/64 scope link 
+       valid_lft forever preferred_lft forever
+--ip r----------------
+default via 192.168.16.2 dev eth0 proto static 
+172.16.1.0/24 dev eth1 proto kernel scope link src 172.16.1.241 
+192.168.16.0/24 dev eth0 proto kernel scope link src 192.168.16.241 
+----------------------
+
+---services status------
+● apache2.service - The Apache HTTP Server
+     Loaded: loaded (/lib/systemd/system/apache2.service; enabled; vendor preset: enabled)
+    Drop-In: /run/systemd/system/service.d
+             └─zzz-lxc-service.conf
+     Active: active (running) since Tue 2025-03-11 18:06:49 UTC; 10min ago
+       Docs: https://httpd.apache.org/docs/2.4/
+   Main PID: 200 (apache2)
+      Tasks: 55 (limit: 4551)
+     Memory: 7.1M
+        CPU: 172ms
+     CGroup: /system.slice/apache2.service
+             ├─200 /usr/sbin/apache2 -k start
+             ├─205 /usr/sbin/apache2 -k start
+             └─206 /usr/sbin/apache2 -k start
+
+Mar 11 18:06:48 server1 systemd[1]: Starting The Apache HTTP Server...
+Mar 11 18:06:49 server1 apachectl[185]: AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 192.168.16.21. Set the 'ServerName' directive globally to suppress this message
+Mar 11 18:06:49 server1 systemd[1]: Started The Apache HTTP Server.
+
+● squid.service - Squid Web Proxy Server
+     Loaded: loaded (/lib/systemd/system/squid.service; enabled; vendor preset: enabled)
+    Drop-In: /run/systemd/system/service.d
+             └─zzz-lxc-service.conf
+     Active: active (running) since Tue 2025-03-11 18:06:51 UTC; 10min ago
+       Docs: man:squid(8)
+   Main PID: 261 (squid)
+      Tasks: 4 (limit: 4551)
+     Memory: 28.4M
+        CPU: 530ms
+     CGroup: /system.slice/squid.service
+             ├─261 /usr/sbin/squid --foreground -sYC
+             ├─263 "(squid-1)" --kid squid-1 --foreground -sYC
+             ├─264 "(logfile-daemon)" /var/log/squid/access.log
+             └─265 "(pinger)"
+
+Mar 11 18:06:51 server1 squid[263]: Using Least Load store dir selection
+Mar 11 18:06:51 server1 squid[263]: Set Current Directory to /var/spool/squid
+Mar 11 18:06:51 server1 squid[263]: Finished loading MIME types and icons.
+Mar 11 18:06:51 server1 squid[263]: HTCP Disabled.
+Mar 11 18:06:51 server1 squid[263]: Pinger socket opened on FD 14
+Mar 11 18:06:51 server1 squid[263]: Squid plugin modules loaded: 0
+Mar 11 18:06:51 server1 squid[263]: Adaptation support is off.
+Mar 11 18:06:51 server1 squid[263]: Accepting HTTP Socket connections at conn3 local=[::]:3128 remote=[::] FD 12 flags=9
+Mar 11 18:06:51 server1 systemd[1]: Started Squid Web Proxy Server.
+Mar 11 18:06:52 server1 squid[263]: storeLateRelease: released 0 objects
+------------------------
+
+---getents--------------------
+aubrey:x:1002:1003::/home/aubrey:/bin/bash
+captain:x:1003:1004::/home/captain:/bin/bash
+snibbles:x:1004:1005::/home/snibbles:/bin/bash
+brownie:x:1005:1006::/home/brownie:/bin/bash
+scooter:x:1006:1007::/home/scooter:/bin/bash
+sandy:x:1007:1008::/home/sandy:/bin/bash
+perrier:x:1008:1009::/home/perrier:/bin/bash
+cindy:x:1009:1010::/home/cindy:/bin/bash
+tiger:x:1010:1011::/home/tiger:/bin/bash
+yoda:x:1011:1012::/home/yoda:/bin/bash
+dennis:x:1001:1002::/home/dennis:/bin/bash
+sudo:x:27:ubuntu,dennis
+---user home dir contents-----
+   681384      4 -rw-r--r--   1 cindy    cindy        3771 Jan  6  2022 /home/cindy/.bashrc
+   681385      4 -rw-r--r--   1 cindy    cindy         220 Jan  6  2022 /home/cindy/.bash_logout
+   681386      4 -rw-r--r--   1 cindy    cindy         807 Jan  6  2022 /home/cindy/.profile
+   681388      4 -rw-r--r--   1 cindy    cindy         100 Mar 11 17:30 /home/cindy/.ssh/authorized_keys
+   681256      4 -rw-r--r--   1 captain  captain      3771 Jan  6  2022 /home/captain/.bashrc
+   681324      4 -rw-r--r--   1 captain  captain       220 Jan  6  2022 /home/captain/.bash_logout
+   681350      4 -rw-r--r--   1 captain  captain       807 Jan  6  2022 /home/captain/.profile
+   681352      4 -rw-r--r--   1 captain  captain       100 Mar 11 17:30 /home/captain/.ssh/authorized_keys
+   681366      4 -rw-r--r--   1 scooter  scooter      3771 Jan  6  2022 /home/scooter/.bashrc
+   681367      4 -rw-r--r--   1 scooter  scooter       220 Jan  6  2022 /home/scooter/.bash_logout
+   681368      4 -rw-r--r--   1 scooter  scooter       807 Jan  6  2022 /home/scooter/.profile
+   681370      4 -rw-r--r--   1 scooter  scooter       100 Mar 11 17:30 /home/scooter/.ssh/authorized_keys
+   681378      4 -rw-r--r--   1 perrier  perrier      3771 Jan  6  2022 /home/perrier/.bashrc
+   681379      4 -rw-r--r--   1 perrier  perrier       220 Jan  6  2022 /home/perrier/.bash_logout
+   681380      4 -rw-r--r--   1 perrier  perrier       807 Jan  6  2022 /home/perrier/.profile
+   681382      4 -rw-r--r--   1 perrier  perrier       100 Mar 11 17:30 /home/perrier/.ssh/authorized_keys
+   681390      4 -rw-r--r--   1 tiger    tiger        3771 Jan  6  2022 /home/tiger/.bashrc
+   681391      4 -rw-r--r--   1 tiger    tiger         220 Jan  6  2022 /home/tiger/.bash_logout
+   681392      4 -rw-r--r--   1 tiger    tiger         807 Jan  6  2022 /home/tiger/.profile
+   681394      4 -rw-r--r--   1 tiger    tiger         100 Mar 11 17:30 /home/tiger/.ssh/authorized_keys
+   546102      4 -rw-r--r--   1 root     remoteadmin     3771 Jan  6  2022 /home/remoteadmin/.bashrc
+   526205      4 -rwxr-xr-x   1 root     remoteadmin     2179 Mar 11 18:17 /home/remoteadmin/assignment2.sh
+   546103      4 -rw-r--r--   1 root     remoteadmin      220 Jan  6  2022 /home/remoteadmin/.bash_logout
+   549365      8 -rw-------   1 root     remoteadmin     6840 Mar 10 19:24 /home/remoteadmin/.bash_history
+   666163      0 -rw-r--r--   1 root     root               0 Mar  6 20:59 /home/remoteadmin/.cache/motd.legal-displayed
+   546104      4 -rw-r--r--   1 root     remoteadmin      807 Jan  6  2022 /home/remoteadmin/.profile
+   544773      4 -rw-------   1 root     root             107 Mar  6 20:45 /home/remoteadmin/.ssh/authorized_keys
+   544771      4 -rw-r--r--   1 root     ubuntu           107 Mar  6 20:45 /home/remoteadmin/.ssh/id_ed25519.pub
+   526984      4 -rw-r--r--   1 ubuntu   ubuntu          3771 Jan  6  2022 /home/ubuntu/.bashrc
+   526983      4 -rw-r--r--   1 ubuntu   ubuntu           220 Jan  6  2022 /home/ubuntu/.bash_logout
+   526985      4 -rw-r--r--   1 ubuntu   ubuntu           807 Jan  6  2022 /home/ubuntu/.profile
+   671611      4 -rw-r--r--   1 dennis   dennis           300 Mar 11 17:30 /home/dennis/.ssh/authorized_keys
+   681372      4 -rw-r--r--   1 sandy    sandy           3771 Jan  6  2022 /home/sandy/.bashrc
+   681373      4 -rw-r--r--   1 sandy    sandy            220 Jan  6  2022 /home/sandy/.bash_logout
+   681374      4 -rw-r--r--   1 sandy    sandy            807 Jan  6  2022 /home/sandy/.profile
+   681376      4 -rw-r--r--   1 sandy    sandy            100 Mar 11 17:30 /home/sandy/.ssh/authorized_keys
+   681360      4 -rw-r--r--   1 brownie  brownie         3771 Jan  6  2022 /home/brownie/.bashrc
+   681361      4 -rw-r--r--   1 brownie  brownie          220 Jan  6  2022 /home/brownie/.bash_logout
+   681362      4 -rw-r--r--   1 brownie  brownie          807 Jan  6  2022 /home/brownie/.profile
+   681364      4 -rw-r--r--   1 brownie  brownie          100 Mar 11 17:30 /home/brownie/.ssh/authorized_keys
+   681354      4 -rw-r--r--   1 snibbles snibbles        3771 Jan  6  2022 /home/snibbles/.bashrc
+   681355      4 -rw-r--r--   1 snibbles snibbles         220 Jan  6  2022 /home/snibbles/.bash_logout
+   681356      4 -rw-r--r--   1 snibbles snibbles         807 Jan  6  2022 /home/snibbles/.profile
+   681358      4 -rw-r--r--   1 snibbles snibbles         100 Mar 11 17:30 /home/snibbles/.ssh/authorized_keys
+   671721      4 -rw-r--r--   1 aubrey   aubrey          3771 Jan  6  2022 /home/aubrey/.bashrc
+   681032      4 -rw-r--r--   1 aubrey   aubrey           220 Jan  6  2022 /home/aubrey/.bash_logout
+   681033      4 -rw-r--r--   1 aubrey   aubrey           807 Jan  6  2022 /home/aubrey/.profile
+   681254      4 -rw-r--r--   1 aubrey   aubrey           100 Mar 11 17:30 /home/aubrey/.ssh/authorized_keys
+   681396      4 -rw-r--r--   1 yoda     yoda            3771 Jan  6  2022 /home/yoda/.bashrc
+   681397      4 -rw-r--r--   1 yoda     yoda             220 Jan  6  2022 /home/yoda/.bash_logout
+   681398      4 -rw-r--r--   1 yoda     yoda             807 Jan  6  2022 /home/yoda/.profile
+   681400      4 -rw-r--r--   1 yoda     yoda             100 Mar 11 17:30 /home/yoda/.ssh/authorized_keys
+/home/aubrey/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+-------------
+/home/brownie/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+-------------
+/home/captain/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+-------------
+/home/cindy/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+-------------
+/home/dennis/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+-------------
+/home/perrier/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+-------------
+/home/remoteadmin/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKjWsD/msRiOBQYomlYVdiET4M5dsxzzWrtJKoZosN5d 200541705@georgianc.on.ca
+-------------
+/home/sandy/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+-------------
+/home/scooter/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+-------------
+/home/snibbles/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+-------------
+/home/tiger/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+-------------
+/home/yoda/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI student@generic-vm
+-------------
+------------------------------
+
