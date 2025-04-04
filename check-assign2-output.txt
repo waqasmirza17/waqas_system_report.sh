@@ -1,6 +1,10 @@
 ---Host/Student info----
 
+<<<<<<< HEAD
+Running on Mon Mar 10 03:11:30 PM EDT 2025
+=======
 Running on Tue Mar 11 02:17:04 PM EDT 2025
+>>>>>>> 47f3ffbe420b1413b9cd9d75b6c14169199cddab
 Run by waqas - () on host
  Static hostname: waqas
       Machine ID: bdd45d1424dd49c5950f104b8da391e3
@@ -9,6 +13,9 @@ Operating System: Ubuntu 24.04.1 LTS
 ------------------------
 
 ---Start of Assignment2.sh Check------
+<<<<<<< HEAD
+Failed to retrieve makecontainers.sh script
+=======
 ---Running makecontainers.sh----------
 # Host server1-mgmt found: line 6
 /home/waqas/.ssh/known_hosts updated.
@@ -516,3 +523,4 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4rT3vTt99Ox5kndS4HmgTrKBT8SKzhK4rhGkEVGlCI
 -------------
 ------------------------------
 
+>>>>>>> 47f3ffbe420b1413b9cd9d75b6c14169199cddab

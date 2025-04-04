@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+--2025-03-10 15:11:30--  https://zonzorp.github.io/COMP2137/makecontainers.sh
+Resolving zonzorp.github.io (zonzorp.github.io)... 185.199.108.153, 185.199.110.153, 185.199.109.153, ...
+Connecting to zonzorp.github.io (zonzorp.github.io)|185.199.108.153|:443... connected.
+HTTP request sent, awaiting response... 404 Not Found
+2025-03-10 15:11:30 ERROR 404: Not Found.
+
+=======
 Warning: Permanently added 'server1-mgmt' (ED25519) to the list of known hosts.
 grep: /etc/netplan/00-installer-config.yaml: No such file or directory
 cp: cannot stat '/etc/netplan/00-installer-config.yaml': No such file or directory
@@ -11,3 +19,4 @@ cp: cannot stat '/etc/netplan/00-installer-config.yaml': No such file or directo
 sed: can't read /etc/netplan/00-installer-config.yaml: No such file or directory
 WARNING:root:Cannot call Open vSwitch: ovsdb-server.service is not running.
 WARNING:root:Cannot call Open vSwitch: ovsdb-server.service is not running.
+>>>>>>> 47f3ffbe420b1413b9cd9d75b6c14169199cddab
